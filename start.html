@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIP Avtosalon - Kirish</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* ASOSIY STILLAR */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        /* FON KARUSELI */
+        #bgCarousel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .carousel-inner, .carousel-item {
+            height: 100vh;
+        }
+
+        .carousel-item img {
+            height: 100vh;
+            width: 100%;
+            object-fit: cover; /* Rasmni cho'zib yubormaslik uchun */
+        }
+
+        /* QORONG'U QATLAM (Overlay) */
+        .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Formani ko'rinishini yaxshilaydi */
+            z-index: 1;
+        }
+
+        /* AVTORIZATSIYA KONTEYNERI */
+        .auth-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* KARTA STILI (Glassmorphism) */
+        .card {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            box-shadow: none;
+            border: 1px solid #007bff;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toggle-link {
+            color: #0dcaf0;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+
+    
+        .carousel-control-prev, .carousel-control-next {
+            z-index: 3;
+            width: 5%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="bgCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920" alt="Car 1">
+        </div>
+        <div class="carousel-item">
+            <img src="https://zamin.uz/uploads/posts/2025-01/2-9lgxssss.webp" alt="Car 2">
+        </div>
+        <div class="carousel-item">
+            <img src="https://zamin.uz/uploads/posts/2025-01/30683dfebd_maxresdefault.webp" alt="Car 3">
+        </div>
+    </div>
+    
+    <button class="carousel-control-prev" type="button" data-bs-target="#bgCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bgCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+
+    <div class="carousel-overlay"></div>
+</div>
+
+<div class="auth-container p-3">
+    <div id="loginForm" class="card p-4">
+        <h2 class="text-center mb-4">CIP Avtosalon</h2>
+        <form action="#">
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Login / Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" placeholder="Parol" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Kirish</button>
+            <p class="text-center mt-3 mb-0">
+                Hisobingiz yo'qmi? <br>
+                <span class="toggle-link" onclick="toggleForm()">Ro'yxatdan o'tish</span>
+            </p>
+        </form>
+    </div>
+
+    <div id="registerForm" class="card p-4 d-none">
+        <h2 class="text-center mb-4">Registratsiya</h2>
+        <form action="#">
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="F.I.SH" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" placeholder="Yangi parol" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Ro'yxatdan o'tish</button>
+            <p class="text-center mt-3 mb-0">
+                Hisob bormi? <br>
+                <span class="toggle-link" onclick="toggleForm()">Kirish</span>
+            </p>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Login va Registratsiya o'rtasida almashish
+    function toggleForm() {
+        const login = document.getElementById('loginForm');
+        const register = document.getElementById('registerForm');
+        
+        login.classList.toggle('d-none');
+        register.classList.toggle('d-none');
+    }
+</script>
+
+</body>
+</html>
